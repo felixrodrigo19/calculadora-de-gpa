@@ -1,21 +1,45 @@
+"""GPA module"""
+
+
 class GPACalculator:
+    """ GPA Calculator Class """
+
     def __init__(self, subjects: list):
+        """
+        Class initializer
+
+        :param subjects: Dict containing the weight of the subject and the student's grade in this subject
+        """
         self.subjects: list = subjects
 
     def calculate_gpa(self):
+        """
+        Calculate the GPA value by summing the relative grade of each subject and dividing the total weight
+        :return: GPA value
+        """
+
         score_by_weight_list = self.calculate_score_by_weight()
         total_weight = self.get_total_weight()
-        return sum(score_by_weight_list) / total_weight
+        return score_by_weight_list / total_weight
 
     def calculate_score_by_weight(self):
-        score_by_weight: list = []
-        for subject in self.subjects:
-            weight_score = float(subject.get('subject_score')) * float(subject.get('weight'))
-            score_by_weight.append(weight_score)
+        """
+        Calculate the score in relation to weight
+        :return: Score in relation to weight
+        """
 
-        return score_by_weight
+        weight_score: float = 0.0
+        for subject in self.subjects:
+            weight_score += float(subject.get('subject_score')) * float(subject.get('weight'))
+
+        return weight_score
 
     def get_total_weight(self):
+        """
+        Sum the total weight of all subjects
+        :return: Total weight
+        """
+
         total_weight = 0.0
         for subject in self.subjects:
             total_weight += float(subject.get('weight'))
@@ -23,6 +47,11 @@ class GPACalculator:
 
     @staticmethod
     def convert_base(gpa_value: float):
+        """
+        Convert GPA value from base 10 to base 4
+        :param gpa_value: GPA at base 10, for example 9.80
+        :return: GPA in base 4 for example 3.92
+        """
         return (gpa_value * 4) / 10
 
 
